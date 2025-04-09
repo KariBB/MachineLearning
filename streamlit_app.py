@@ -17,11 +17,11 @@ with st.expander('Data'):
   df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
   df
   
-  st.write('**X**')
+  st.write('**Predictors (x)**')
   X = df.drop(columns=['subject_id', 'stay_id','weaning_success','age_group'], axis=1)
   X
   
-  st.write('**y**')
+  st.write('**Target Variable (y)**')
   y = df.weaning_success
   y
 
