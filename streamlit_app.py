@@ -71,20 +71,20 @@ columns_to_plot = [col for col in numerical_columns if col not in columns_to_exc
 # Plot histograms for each of the remaining numerical columns
 with st.expander('Histograms for Numerical Variables'):
     for col in columns_to_plot:
-    st.subheader(f'Histogram for {col}')
-    
-    # Creating the histogram plot
-    fig, ax = plt.subplots(figsize=(8, 4))
-    ax.hist(X[col], bins=20, color='skyblue', edgecolor='black')
-    ax.set_title(f'Distribution of {col}')
-    ax.set_xlabel(col)
-    ax.set_ylabel('Frequency')
-    
-    # Display the plot in Streamlit
-    st.pyplot(fig)
+        st.subheader(f'Histogram for {col}')
+        
+        # Creating the histogram plot
+        fig, ax = plt.subplots(figsize=(8, 4))
+        ax.hist(X[col], bins=20, color='skyblue', edgecolor='black')
+        ax.set_title(f'Distribution of {col}')
+        ax.set_xlabel(col)
+        ax.set_ylabel('Frequency')
+        
+        # Display the plot in Streamlit
+        st.pyplot(fig)
 
-    # Close the figure after displaying to avoid memory issues
-    plt.close(fig)
+        # Close the figure after displaying to avoid memory issues
+        plt.close(fig)
 
 #------------------------------------------------------------------------------------------------------
 
