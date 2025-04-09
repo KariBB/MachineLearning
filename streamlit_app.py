@@ -24,7 +24,8 @@ with st.expander('Data Visualization'):
 # Data preparation
 with st.sidebar: 
   st.header('Input features')
-  # ,age,bmi,charlson_comorbidity_index,chronic_pulmonary_disease,congestive_heart_failure,dementia,severe_liver_disease,renal_disease,rheumatic_disease,diabetes,gcs_total,max_wbc,max_hemoglobin,max_platelets,max_creatinine,max_anion_gap,min_wbc,min_hemoglobin,min_platelets,min_creatinine,min_anion_gap,max_hr,max_map,max_resp_rate,max_spo2,max_temp,min_hr,min_map,min_resp_rate,min_spo2,min_temp,duration_imv_hours,duration_niv_hours,duration_other_niv_hours,weaning_success,age_group
+  # bmi,charlson_comorbidity_index,chronic_pulmonary_disease,congestive_heart_failure,dementia,severe_liver_disease,renal_disease,rheumatic_disease,diabetes,gcs_total,max_wbc,max_hemoglobin,max_platelets,max_creatinine,max_anion_gap,min_wbc,min_hemoglobin,min_platelets,min_creatinine,min_anion_gap,max_hr,max_map,max_resp_rate,max_spo2,max_temp,min_hr,min_map,min_resp_rate,min_spo2,min_temp,duration_imv_hours,duration_niv_hours,duration_other_niv_hours,weaning_success,age_group
   age = st.slider('age (years)',18,99)
   gender = st.selectbox('gender',('M','F'))
+  bmi = st.number_input('BMI', min_value=12, max_value=80, value=25, step=0.1)
   
