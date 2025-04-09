@@ -31,7 +31,7 @@ with st.expander('Data'):
   
 #-----------------------------------------------------------------------------------------------------
 
-with st.write('Age Group vs Weaning Success')
+with st.expander('Age Group vs Weaning Success'):
 
 # Check if 'age_group' and 'weaning_success' are in the dataset
 if 'age_group' in df.columns and 'weaning_success' in df.columns:
