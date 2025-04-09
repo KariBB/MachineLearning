@@ -30,6 +30,7 @@ with st.expander('Data'):
   
 #-----------------------------------------------------------------------------------------------------
 
+# Exclude the specified columns from the dataset
 columns_to_exclude = [
     'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure', 
     'dementia', 'severe_liver_disease', 'renal_disease', 'rheumatic_disease', 'diabetes', 
@@ -39,27 +40,34 @@ columns_to_exclude = [
 numerical_columns = df.select_dtypes(include=['float64', 'int64']).columns
 numerical_columns = [col for col in numerical_columns if col not in columns_to_exclude]
 
-# Number of columns for the histogram layout
-n_cols = 3
-n_rows = int(np.ceil(len(numerical_columns) / n_cols))
+# Debugging output: Check the numerical columns
+st.write("Numerical Columns:", numerical_columns)
 
-# Create the Streamlit app UI
-st.title('Data Distribution Visualization')
+# Check if there are numerical columns left after exclusion
+if len(numerical_columns) == 0:
+    st.error("No numerical columns available after exclusion.")
+else:
+    # Number of columns for the histogram layout
+    n_cols = 3
+    n_rows = int(np.ceil(len(numerical_columns) / n_cols))
 
-# Create a section for data visualization
-with st.expander('Data Visualization'):
-    plt.figure(figsize=(12, 4 * n_rows))
-    
-    for i, column in enumerate(numerical_columns, 1):
-        plt.subplot(n_rows, n_cols, i)
-        sns.histplot(df[column], kde=True, bins=30)
-        plt.title(f'Distribution of {column}')
-        plt.xlabel(column)
-        plt.ylabel('Frequency')
-    
-    plt.tight_layout()
-    st.pyplot(plt)
-  
+    # Create the Streamlit app UI
+    st.title('Data Distribution Visualization')
+
+    # Create a section for data visualization
+    with st.expander('Data Visualization'):
+        plt.figure(figsize=(12, 4 * n_rows))
+        
+        for i, column in enumerate(numerical_columns, 1):
+            plt.subplot(n_rows, n_cols, i)
+            sns.histplot(df[column], kde=True, bins=30)
+            plt.title(f'Distribution of {column}')
+            plt.xlabel(column)
+            plt.ylabel('Frequency')
+        
+        plt.tight_layout()
+        st.pyplot(plt)
+
 #-----------------------------------------------------------------------------------------------------
 
 # Data preparation
