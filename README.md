@@ -1,13 +1,10 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+# 📦 Machine Learning App 
 
-Description of the app ...
+The __primary objective__ of this app is to develop a reliable model for predicting weaning success in patients with sepsis, as well as to identify the key variables that are associated with the development of this diagnostic.
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-starter-kit.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://MachineLearning.streamlit.app/)
 
 ## GitHub Codespaces
 
