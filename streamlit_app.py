@@ -10,7 +10,7 @@ st.write('- The patient didn’t die within 48 hours after being weaned off the 
 st.write('If the patient needed noninvasive ventilation (like a CPAP machine), it had to be for less than 48 hours after weaning.')
 
 
-st.info('Click on the left side to input your data')
+st.info('Click on the left side to input your data **>**')
 
 with st.expander('Data'):
   st.write('**Raw data**')
