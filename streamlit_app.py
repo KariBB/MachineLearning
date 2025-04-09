@@ -31,7 +31,30 @@ with st.expander('Data'):
   
 #-------------------------------------------------------------------------------------------------------
 
+st.write("### Age Group vs Weaning Success")
 
+with st.expander("Age Group vs Weaning Success"):
+    if 'age_group' in df.columns and 'weaning_success' in df.columns:
+        fig = px.histogram(df, 
+                           x='age_group', 
+                           color='weaning_success', 
+                           barmode='group', 
+                           title='Weaning Success by Age Group',
+                           labels={'weaning_success': 'Weaning Success (0 = Failure, 1 = Success)', 
+                                   'age_group': 'Age Group'},
+                           category_orders={'weaning_success': [0, 1]})
+
+        fig.update_layout(
+            xaxis_title="Age Group",
+            yaxis_title="Count of Patients",
+            barmode='group',
+            xaxis={'categoryorder': 'category ascending'}
+        )
+
+        st.plotly_chart(fig)
+    else:
+        st.warning("Columns 'age_group' or 'weaning_success' not found in the dataset.")
+      
 #------------------------------------------------------------------------------------------------------
 
 # Columns to exclude from the histograms
@@ -47,7 +70,7 @@ columns_to_plot = [col for col in numerical_columns if col not in columns_to_exc
 
 # Plot histograms for each of the remaining numerical columns
 with st.expander('Histograms for Numerical Variables'):
-for col in columns_to_plot:
+    for col in columns_to_plot:
     st.subheader(f'Histogram for {col}')
     
     # Creating the histogram plot
