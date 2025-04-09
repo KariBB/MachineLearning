@@ -46,7 +46,7 @@ with st.sidebar:
   max_anion_gap = st.number_input('Max Anion Gap (mEq/L)', min_value=0.0, max_value=30.0, value=10.0, step=0.1)
   max_hr = st.number_input('Max Heart Rate (bpm)', min_value=40.0, max_value=200.0, value=70.0, step=0.1)
   max_map = st.number_input('Max Heart Rate (mmHg)', min_value=40.0, max_value=200.0, value=70.0, step=0.1)
-  max_resp_rate = st.number_input('Max Resp Rate (breaths/minute)', min_value=10.0, max_value=50.0, value=70.0, step=0.1)
+  max_resp_rate = st.number_input('Max Resp Rate (breaths/minute)', min_value=10.0, max_value=50.0, value=30.0, step=0.1)
   max_spo2 = st.number_input('Max Spo2 (%)', min_value=0.0, max_value=100.0, value=70.0, step=0.1)
   max_temp = st.number_input('Max Temp (F)', min_value=60.0, max_value=100.0, value=70.0, step=0.1)
 
