@@ -28,5 +28,5 @@ with st.sidebar:
   age = st.slider('age (years)',18,99)
   gender = st.selectbox('gender',('M','F'))
   bmi = st.number_input('BMI', min_value=10.0, max_value=80.0, value=25.0, step=0.1)
-  charlson_comorbidity_index = st.number_input('Charlson Combordity Index', min_value=0.0, max_value=20.0, value=10.0, step=1)
+  charlson_comorbidity_index = st.number_input('Charlson Combordity Index', min_value=0, max_value=20, value=10, step=1)
   
