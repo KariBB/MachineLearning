@@ -38,7 +38,7 @@ with st.sidebar:
   renal_disease = st.selectbox('Renal Disease',(0,1))
   rheumatic_disease = st.selectbox('Rheumatic Disease',(0,1))
   diabetes = st.selectbox('Diabetes',(0,1))
-  # max's
+  # max'ss
   max_hemoglobin = st.number_input('Max Hemoglobin (g/dL)', min_value=0.0, max_value=20.0, value=15.0, step=0.1)
   max_platelets = st.number_input('Max Platelets (10^3/mL)', min_value=0.0, max_value=1000.0, value=30.0, step=0.1)
   max_creatinine = st.number_input('Max Creatinine (mmol/L)', min_value=0.0, max_value=400.0, value=200.0, step=0.1)
