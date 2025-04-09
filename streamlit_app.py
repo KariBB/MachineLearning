@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-ttttt
+
 #-------------------------------------------------------------------------------------------------------
 
 st.title('🤖 Machine Learning App')
