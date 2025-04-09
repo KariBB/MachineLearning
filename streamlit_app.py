@@ -31,7 +31,7 @@ with st.expander('Data'):
   
 #-----------------------------------------------------------------------------------------------------
 
-with st.expander('Age Group vs Weaning Success')
+with st.write('Age Group vs Weaning Success')
 
 # Check if 'age_group' and 'weaning_success' are in the dataset
 if 'age_group' in df.columns and 'weaning_success' in df.columns:
@@ -74,7 +74,7 @@ numerical_columns = X.select_dtypes(include=['float64', 'int64']).columns.tolist
 columns_to_plot = [col for col in numerical_columns if col not in columns_to_exclude]
 
 # Plot histograms for each of the remaining numerical columns
-with st.expander('Histograms for Numerical Variables')
+with st.expander('Histograms for Numerical Variables'):
 for col in columns_to_plot:
     st.subheader(f'Histogram for {col}')
     
