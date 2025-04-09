@@ -30,43 +30,28 @@ with st.expander('Data'):
   
 #-----------------------------------------------------------------------------------------------------
 
-# Exclude the specified columns from the dataset
+# Columns to exclude from the histograms
 columns_to_exclude = [
     'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure', 
     'dementia', 'severe_liver_disease', 'renal_disease', 'rheumatic_disease', 'diabetes', 
-    'weaning_success']
+    'weaning_success'
+]
 
-# Select numerical columns and exclude specified columns
-numerical_columns = df.select_dtypes(include=['float64', 'int64']).columns
-numerical_columns = [col for col in numerical_columns if col not in columns_to_exclude]
+# Filter only the numerical columns and exclude the ones in columns_to_exclude
+numerical_columns = X.select_dtypes(include=['float64', 'int64']).columns.tolist()
+columns_to_plot = [col for col in numerical_columns if col not in columns_to_exclude]
 
-# Debugging output: Check the numerical columns
-st.write("Numerical Columns:", numerical_columns)
-
-# Check if there are numerical columns left after exclusion
-if len(numerical_columns) == 0:
-    st.error("No numerical columns available after exclusion.")
-else:
-    # Number of columns for the histogram layout
-    n_cols = 3
-    n_rows = int(np.ceil(len(numerical_columns) / n_cols))
-
-    # Create the Streamlit app UI
-    st.title('Data Distribution Visualization')
-
-    # Create a section for data visualization
-    with st.expander('Data Visualization'):
-        plt.figure(figsize=(12, 4 * n_rows))
-        
-        for i, column in enumerate(numerical_columns, 1):
-            plt.subplot(n_rows, n_cols, i)
-            sns.histplot(df[column], kde=True, bins=30)
-            plt.title(f'Distribution of {column}')
-            plt.xlabel(column)
-            plt.ylabel('Frequency')
-        
-        plt.tight_layout()
-        st.pyplot(plt)
+# Plot histograms for each of the remaining numerical columns
+st.write("### Histograms for Numerical Variables")
+for col in columns_to_plot:
+    st.subheader(f'Histogram for {col}')
+    plt.figure(figsize=(8, 4))
+    plt.hist(X[col], bins=20, color='skyblue', edgecolor='black')
+    plt.title(f'Distribution of {col}')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    st.pyplot(plt)
+    plt.close()  # Close the figure to avoid overlapping
 
 #-----------------------------------------------------------------------------------------------------
 
