@@ -7,7 +7,7 @@ st.info('This is a Machine Learning App for predicting weaning success in patien
 st.write('Our main goal is the Target: Weaning Success (WS) as:')
 st.write('- The patient didn’t need to go back on a breathing tube (intubation) or another form of mechanical ventilation (like a ventilator) within 48 hours after being taken off.')
 st.write('The patient didn’t die within 48 hours after being weaned off the ventilator.')
- st.write('If the patient needed noninvasive ventilation (like a CPAP machine), it had to be for less than 48 hours after weaning.')
+st.write('If the patient needed noninvasive ventilation (like a CPAP machine), it had to be for less than 48 hours after weaning.')
 
 with st.expander('Data'):
   st.write('**Raw data**')
