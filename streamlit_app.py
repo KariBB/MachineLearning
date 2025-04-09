@@ -31,34 +31,34 @@ with st.expander('Data'):
   
 #------------------------------------------------------------------------------------------------------
 
-with st.expander('Age Group vs Weaning Success'):
+st.write("### Age Group vs Weaning Success")
 
-# Check if 'age_group' and 'weaning_success' are in the dataset
-if 'age_group' in df.columns and 'weaning_success' in df.columns:
-    # Create a grouped bar plot using Plotly
-    fig = px.histogram(df, 
-                       x='age_group', 
-                       color='weaning_success', 
-                       barmode='group', 
-                       title='Weaning Success by Age Group',
-                       labels={'weaning_success': 'Weaning Success (0 = Failure, 1 = Success)', 
-                               'age_group': 'Age Group'},
-                       category_orders={'weaning_success': [0, 1]})  # Ensure 0 comes before 1
+# Using st.expander for the visualization section
+with st.expander("### Age Group vs Weaning Success"):  # <-- HERE is the fixed part
+    # Check if 'age_group' and 'weaning_success' are in the dataset
+    if 'age_group' in df.columns and 'weaning_success' in df.columns:
+        # Create a grouped bar plot using Plotly
+        fig = px.histogram(df, 
+                           x='age_group', 
+                           color='weaning_success', 
+                           barmode='group', 
+                           title='Weaning Success by Age Group',
+                           labels={'weaning_success': 'Weaning Success (0 = Failure, 1 = Success)', 
+                                   'age_group': 'Age Group'},
+                           category_orders={'weaning_success': [0, 1]})  # Ensure 0 comes before 1
 
-    # Update layout for clarity
-    fig.update_layout(
-        xaxis_title="Age Group",
-        yaxis_title="Count of Patients",
-        barmode='group',  # Show bars side by side
-        xaxis={'categoryorder': 'category ascending'}  # Sort age_group in ascending order
-    )
+        # Update layout for clarity
+        fig.update_layout(
+            xaxis_title="Age Group",
+            yaxis_title="Count of Patients",
+            barmode='group',  # Show bars side by side
+            xaxis={'categoryorder': 'category ascending'}  # Sort age_group in ascending order
+        )
 
-    # Display the plot in Streamlit
-    st.plotly_chart(fig)
-else:
-    st.warning("Columns 'age_group' or 'weaning_success' not found in the dataset.")
-
-
+        # Display the plot in Streamlit
+        st.plotly_chart(fig)
+    else:
+        st.warning("Columns 'age_group' or 'weaning_success' not found in the dataset.")
 
 #------------------------------------------------------------------------------------------------------
 
