@@ -33,8 +33,7 @@ with st.expander('Data'):
 
 st.write("### Age Group vs Weaning Success")
 
-# Use plain text (no Markdown headers) inside st.expander
-with st.expander("Age Group vs Weaning Success"):
+with st.expander("Age Group vs Weaning Success"):  # Use a regular string and add the colon
     if 'age_group' in df.columns and 'weaning_success' in df.columns:
         fig = px.histogram(df, 
                            x='age_group', 
