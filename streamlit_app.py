@@ -39,8 +39,15 @@ with st.sidebar:
   rheumatic_disease = st.selectbox('Rheumatic Disease',(0,1))
   diabetes = st.selectbox('Diabetes',(0,1))
   # max'ss
+  max_wbc = st.number_input('Max White Blood Cells (mEq/L)', min_value=0.0, max_value=30.0, value=20.0, step=0.1)
   max_hemoglobin = st.number_input('Max Hemoglobin (g/dL)', min_value=0.0, max_value=20.0, value=15.0, step=0.1)
   max_platelets = st.number_input('Max Platelets (10^3/mL)', min_value=0.0, max_value=1000.0, value=30.0, step=0.1)
   max_creatinine = st.number_input('Max Creatinine (mmol/L)', min_value=0.0, max_value=400.0, value=200.0, step=0.1)
+  max_anion_gap = st.number_input('Max Anion Gap (mEq/L)', min_value=0.0, max_value=30.0, value=10.0, step=0.1)
+  max_hr = st.number_input('Max Heart Rate (bpm)', min_value=40.0, max_value=200.0, value=70.0, step=0.1)
+  max_map = st.number_input('Max Heart Rate (mmHg)', min_value=40.0, max_value=200.0, value=70.0, step=0.1)
+  max_resp_rate = st.number_input('Max Resp Rate (breaths/minute)', min_value=10.0, max_value=50.0, value=70.0, step=0.1)
+  max_spo2 = st.number_input('Max Spo2 (%)', min_value=0.0, max_value=100.0, value=70.0, step=0.1)
+  max_temp = st.number_input('Max Temp (F)', min_value=60.0, max_value=100.0, value=70.0, step=0.1)
 
   
