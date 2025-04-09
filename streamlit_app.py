@@ -19,4 +19,4 @@ y = df.weaning_success
 y
 
 with st.expander('Data Visualization'):
-  st.line_chart(data=df, x="age", y="bmi", color="weaning_success")
+  st.scatter_chart(data=df, x='age', y='bmi', color='weaning_success')
