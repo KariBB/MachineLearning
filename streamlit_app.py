@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+#---------------------------------------------------------------------------
 st.title('🤖 Machine Learning App')
 
 st.info('This is a Machine Learning App for predicting weaning success in patients with sepsis')
@@ -12,6 +12,7 @@ st.write('If the patient needed noninvasive ventilation (like a CPAP machine), i
 
 st.info('Click on the left side to input your data **>**')
 
+#---------------------------------------------------------------------------
 with st.expander('Data'):
   st.write('**Raw data**')
   df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
@@ -24,9 +25,39 @@ with st.expander('Data'):
   st.write('**Target Variable (y)**')
   y = df.weaning_success
   y
+#---------------------------------------------------------------------------
 
+columns_to_exclude = [
+    'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure', 
+    'dementia', 'severe_liver_disease', 'renal_disease', 'rheumatic_disease', 'diabetes', 
+    'weaning_success']
+
+# Select numerical columns and exclude specified columns
+numerical_columns = df.select_dtypes(include=['float64', 'int64']).columns
+numerical_columns = [col for col in numerical_columns if col not in columns_to_exclude]
+
+# Number of columns for the histogram layout
+n_cols = 3
+n_rows = int(np.ceil(len(numerical_columns) / n_cols))
+
+# Create the Streamlit app UI
+st.title('Data Distribution Visualization')
+
+# Create a section for data visualization
 with st.expander('Data Visualization'):
-    st.scatter_chart(data=df, x='age', y='bmi', color='weaning_success')
+    plt.figure(figsize=(12, 4 * n_rows))
+    
+    for i, column in enumerate(numerical_columns, 1):
+        plt.subplot(n_rows, n_cols, i)
+        sns.histplot(df[column], kde=True, bins=30)
+        plt.title(f'Distribution of {column}')
+        plt.xlabel(column)
+        plt.ylabel('Frequency')
+    
+    plt.tight_layout()
+    st.pyplot(plt)
+  
+#---------------------------------------------------------------------------
 
 # Data preparation
 with st.sidebar: 
