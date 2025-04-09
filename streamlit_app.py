@@ -32,9 +32,9 @@ with st.expander('Data'):
 
 # Columns to exclude from the histograms
 columns_to_exclude = [
-    'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure','group_age', 
+    'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure', 
     'dementia', 'severe_liver_disease', 'renal_disease', 'rheumatic_disease', 'diabetes', 
-    'weaning_success'
+    'weaning_success', 'age_group'  # Added age_group to the exclusion list
 ]
 
 # Filter only the numerical columns and exclude the ones in columns_to_exclude
@@ -45,13 +45,19 @@ columns_to_plot = [col for col in numerical_columns if col not in columns_to_exc
 st.write("### Histograms for Numerical Variables")
 for col in columns_to_plot:
     st.subheader(f'Histogram for {col}')
-    plt.figure(figsize=(8, 4))
-    plt.hist(X[col], bins=20, color='skyblue', edgecolor='black')
-    plt.title(f'Distribution of {col}')
-    plt.xlabel(col)
-    plt.ylabel('Frequency')
-    st.pyplot(plt)
-    plt.close()  # Close the figure to avoid overlapping
+    
+    # Creating the histogram plot
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.hist(X[col], bins=20, color='skyblue', edgecolor='black')
+    ax.set_title(f'Distribution of {col}')
+    ax.set_xlabel(col)
+    ax.set_ylabel('Frequency')
+    
+    # Display the plot in Streamlit
+    st.pyplot(fig)
+
+    # Close the figure after displaying to avoid memory issues
+    plt.close(fig)
 
 #-----------------------------------------------------------------------------------------------------
 
