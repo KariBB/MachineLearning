@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
-#---------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------------------
+
 st.title('🤖 Machine Learning App')
 
 st.info('This is a Machine Learning App for predicting weaning success in patients with sepsis')
@@ -9,10 +11,10 @@ st.write('- The patient didn’t need to go back on a breathing tube (intubation
 st.write('- The patient didn’t die within 48 hours after being weaned off the ventilator.')
 st.write('If the patient needed noninvasive ventilation (like a CPAP machine), it had to be for less than 48 hours after weaning.')
 
-
 st.info('Click on the left side to input your data **>**')
 
-#---------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
+
 with st.expander('Data'):
   st.write('**Raw data**')
   df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
@@ -25,7 +27,8 @@ with st.expander('Data'):
   st.write('**Target Variable (y)**')
   y = df.weaning_success
   y
-#---------------------------------------------------------------------------
+  
+#-----------------------------------------------------------------------------------------------------
 
 columns_to_exclude = [
     'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure', 
@@ -57,7 +60,7 @@ with st.expander('Data Visualization'):
     plt.tight_layout()
     st.pyplot(plt)
   
-#---------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 
 # Data preparation
 with st.sidebar: 
