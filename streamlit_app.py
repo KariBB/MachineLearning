@@ -16,20 +16,23 @@ st.info('Click on the left side to input your data **>**')
 
 #------------------------------------------------------------------------------------------------------
 
+# ✅ Load the data at the top, so it's always available
+df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
+X = df.drop(columns=['subject_id', 'stay_id', 'weaning_success', 'age_group'], axis=1)
+y = df.weaning_success
+
+# Data display inside expander
 with st.expander('Data'):
-  st.write('**Raw data**')
-  df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
-  df
-  
-  st.write('**Predictors (x)**')
-  X = df.drop(columns=['subject_id', 'stay_id','weaning_success','age_group'], axis=1)
-  X
-  
-  st.write('**Target Variable (y)**')
-  y = df.weaning_success
-  y
-  
-#-------------------------------------------------------------------------------------------------------
+    st.write('**Raw data**')
+    st.write(df)
+
+    st.write('**Predictors (X)**')
+    st.write(X)
+
+    st.write('**Target Variable (y)**')
+    st.write(y)
+
+#------------------------------------------------------------------------------------------------------
 
 # Histogram by age group
 st.write("### Age Group vs Weaning Success")
