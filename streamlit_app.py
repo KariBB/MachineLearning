@@ -32,7 +32,7 @@ with st.expander('Data'):
 
 # Columns to exclude from the histograms
 columns_to_exclude = [
-    'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure', 
+    'subject_id', 'stay_id', 'chronic_pulmonary_disease', 'congestive_heart_failure','group_age', 
     'dementia', 'severe_liver_disease', 'renal_disease', 'rheumatic_disease', 'diabetes', 
     'weaning_success'
 ]
