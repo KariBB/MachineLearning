@@ -3,10 +3,4 @@ numpy
 pandas
 scikit-learn
 matplotlib
-plotly.express
-RandomForestClassifier
-train_test_split
-compute_class_weight
-classification_report
-confusion_matrix
 plotly
