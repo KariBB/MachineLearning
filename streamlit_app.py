@@ -136,61 +136,80 @@ with st.sidebar:
   duration_niv_hours = st.number_input('Durations Non Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
   duration_other_niv_hours = st.number_input('Durations Other Non Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
 
+#-----------------------------------------------------------------------------------------------------------------------
+
+#  Random Forest model into the Streamlit app so that it uses the user input from the sidebar to make a prediction.
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Step 1: Create DataFrame from sidebar inputs
+user_input = pd.DataFrame([{
+    'age': age,
+    'gender': 1 if gender == 'M' else 0,
+    'bmi': bmi,
+    'charlson_comorbidity_index': charlson_comorbidity_index,
+    'chronic_pulmonary_disease': chronic_pulmonary_disease,
+    'congestive_heart_failure': congestive_heart_failure,
+    'dementia': dementia,
+    'severe_liver_disease': severe_liver_disease,
+    'renal_disease': renal_disease,
+    'rheumatic_disease': rheumatic_disease,
+    'diabetes': diabetes,
+    'gcs_total': gcs_total,
+    'max_wbc': max_wbc,
+    'max_hemoglobin': max_hemoglobin,
+    'max_platelets': max_platelets,
+    'max_creatinine': max_creatinine,
+    'max_anion_gap': max_anion_gap,
+    'max_hr': max_hr,
+    'max_map': max_map,
+    'max_resp_rate': max_resp_rate,
+    'max_spo2': max_spo2,
+    'max_temp': max_temp,
+    'duration_imv_hours': duration_inv_hours,
+    'duration_niv_hours': duration_niv_hours,
+    'duration_other_niv_hours': duration_other_niv_hours
+}])
+
 #-------------------------------------------------------------------------------------------------------
+# Step 2: Train model with class weights using cache to speed it up
+@st.cache_resource
+def train_model(X, y):
+    weights = compute_class_weight(class_weight='balanced', classes=y.unique(), y=y)
+    class_weight_dict = dict(zip(y.unique(), weights))
 
-# Step 2: Train-test split and model training
-X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.2, random_state=42)
-class_weights = compute_class_weight(class_weight='balanced', classes=y.unique(), y=y)
-class_weight_dict = dict(zip(y.unique(), class_weights))
+    model = RandomForestClassifier(n_estimators=100, class_weight=class_weight_dict, random_state=42)
+    model.fit(X, y)
+    return model
 
-clf = RandomForestClassifier(
-    n_estimators=100,
-    random_state=42,
-    class_weight=class_weight_dict,
-    n_jobs=-1
-)
-clf.fit(X_train, y_train)
+model = train_model(X, y)
 
-# Step 3: Predict with sidebar input
-# Create DataFrame from user input
-user_data = pd.DataFrame([[
-    age,
-    1 if gender == 'M' else 0,
-    bmi,
-    charlson_comorbidity_index,
-    chronic_pulmonary_disease,
-    congestive_heart_failure,
-    dementia,
-    severe_liver_disease,
-    renal_disease,
-    rheumatic_disease,
-    diabetes,
-    gcs_total,
-    max_wbc,
-    max_hemoglobin,
-    max_platelets,
-    max_creatinine,
-    max_anion_gap,
-    max_hr,
-    max_map,
-    max_resp_rate,
-    max_spo2,
-    max_temp,
-    duration_inv_hours,
-    duration_niv_hours,
-    duration_other_niv_hours
-]], columns=features)
+#-------------------------------------------------------------------------------------------------------
+# Step 3: Make prediction
+prediction = model.predict(user_input)[0]
+prediction_proba = model.predict_proba(user_input)[0]
 
-# Step 4: Display prediction
-prediction = clf.predict(user_data)[0]
-prediction_proba = clf.predict_proba(user_data)[0]
+#-------------------------------------------------------------------------------------------------------
+# Step 4: Display results
+st.subheader("🧠 Model Prediction")
+if prediction == 1:
+    st.success(f"✅ Weaning **Success** predicted (Probability: {prediction_proba[1]*100:.2f}%)")
+else:
+    st.error(f"❌ Weaning **Failure** predicted (Probability: {prediction_proba[0]*100:.2f}%)")
 
-st.subheader("📊 Prediction Result")
-st.write(f"### ✅ Predicted Weaning Success: **{'Yes' if prediction == 1 else 'No'}**")
-st.write("### 🔍 Prediction Probabilities:")
-st.write(f"- Success (1): {prediction_proba[1]:.2f}")
-st.write(f"- Failure (0): {prediction_proba[0]:.2f}")
+st.markdown("#### 🔍 Prediction Probabilities")
+st.write({
+    "Weaning Failure (0)": f"{prediction_proba[0]*100:.2f}%",
+    "Weaning Success (1)": f"{prediction_proba[1]*100:.2f}%"
+})
 
 
 
-  
+
+
+
+
+
+
+
+
