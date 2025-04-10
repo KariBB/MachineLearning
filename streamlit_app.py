@@ -36,7 +36,7 @@ with st.expander('Data'):
 #------------------------------------------------------------------------------------------------------
 
 # Histogram by age group
-st.write("### Age Group vs Weaning Success")
+st.write("### Visualization Tools")
 
 with st.expander("Age Group vs Weaning Success"):
     if 'age_group' in df.columns and 'weaning_success' in df.columns:
