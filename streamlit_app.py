@@ -15,7 +15,7 @@ st.write('If the patient needed noninvasive ventilation (like a CPAP machine), i
 
 st.info('Click on the left side to input your data **>**')
 
-#------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------
 
 # ✅ Load the data at the top, so it's always available
 df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
