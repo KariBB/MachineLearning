@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.utils.class_weight import compute_class_weight
+from sklearn.metrics import classification_report, confusion_matrix
 
 #---------------------------------------------------------------------------------------------------------
 
@@ -19,7 +23,13 @@ st.info('Click on the left side to input your data **>**')
 
 # ✅ Load the data at the top, so it's always available
 df = pd.read_csv('https://raw.githubusercontent.com/KariBB/MachineLearning/refs/heads/master/final_cleaned_dataset.csv')
-X = df.drop(columns=['subject_id', 'stay_id', 'weaning_success', 'age_group'], axis=1)
+features = [
+    'age', 'gender', 'bmi', 'charlson_comorbidity_index', 'chronic_pulmonary_disease', 'congestive_heart_failure',
+    'dementia', 'severe_liver_disease', 'renal_disease', 'rheumatic_disease', 'diabetes', 'gcs_total', 'max_wbc',
+    'max_hemoglobin', 'max_platelets', 'max_creatinine','max_anion_gap', 'max_hr', 'max_map', 'max_resp_rate',
+    'max_spo2', 'max_temp', 'duration_imv_hours','duration_niv_hours', 'duration_other_niv_hours']
+X = df[features].copy()
+X['gender'] = X['gender'].map({'F': 0, 'M': 1})  # Encode gender
 y = df.weaning_success
 
 # Data display inside expander
@@ -60,7 +70,7 @@ with st.expander("Age Group vs Weaning Success"):
     else:
         st.warning("Columns 'age_group' or 'weaning_success' not found in the dataset.")
       
-#------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------
 
 # Columns to exclude from the histograms
 columns_to_exclude = [
@@ -121,9 +131,66 @@ with st.sidebar:
   max_resp_rate = st.number_input('Max Resp Rate (breaths/minute)', min_value=10.0, max_value=50.0, value=30.0, step=0.1)
   max_spo2 = st.number_input('Max Spo2 (%)', min_value=0.0, max_value=100.0, value=70.0, step=0.1)
   max_temp = st.number_input('Max Temp (F)', min_value=60.0, max_value=100.0, value=70.0, step=0.1)
-  # Ventilation hours
+  # Ventilation hrs
   duration_inv_hours = st.number_input('Durations Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
   duration_niv_hours = st.number_input('Durations Non Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
   duration_other_niv_hours = st.number_input('Durations Other Non Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
+
+#-------------------------------------------------------------------------------------------------------
+
+# Step 2: Train-test split and model training
+X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.2, random_state=42)
+class_weights = compute_class_weight(class_weight='balanced', classes=y.unique(), y=y)
+class_weight_dict = dict(zip(y.unique(), class_weights))
+
+clf = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42,
+    class_weight=class_weight_dict,
+    n_jobs=-1
+)
+clf.fit(X_train, y_train)
+
+# Step 3: Predict with sidebar input
+# Create DataFrame from user input
+user_data = pd.DataFrame([[
+    age,
+    1 if gender == 'M' else 0,
+    bmi,
+    charlson_comorbidity_index,
+    chronic_pulmonary_disease,
+    congestive_heart_failure,
+    dementia,
+    severe_liver_disease,
+    renal_disease,
+    rheumatic_disease,
+    diabetes,
+    gcs_total,
+    max_wbc,
+    max_hemoglobin,
+    max_platelets,
+    max_creatinine,
+    max_anion_gap,
+    max_hr,
+    max_map,
+    max_resp_rate,
+    max_spo2,
+    max_temp,
+    duration_inv_hours,
+    duration_niv_hours,
+    duration_other_niv_hours
+]], columns=features)
+
+# Step 4: Display prediction
+prediction = clf.predict(user_data)[0]
+prediction_proba = clf.predict_proba(user_data)[0]
+
+st.subheader("📊 Prediction Result")
+st.write(f"### ✅ Predicted Weaning Success: **{'Yes' if prediction == 1 else 'No'}**")
+st.write("### 🔍 Prediction Probabilities:")
+st.write(f"- Success (1): {prediction_proba[1]:.2f}")
+st.write(f"- Failure (0): {prediction_proba[0]:.2f}")
+
+
 
   
