@@ -121,5 +121,9 @@ with st.sidebar:
   max_resp_rate = st.number_input('Max Resp Rate (breaths/minute)', min_value=10.0, max_value=50.0, value=30.0, step=0.1)
   max_spo2 = st.number_input('Max Spo2 (%)', min_value=0.0, max_value=100.0, value=70.0, step=0.1)
   max_temp = st.number_input('Max Temp (F)', min_value=60.0, max_value=100.0, value=70.0, step=0.1)
+  # Ventilation hours
+  duration_inv_hours = st.number_input('Durations Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
+  duration_niv_hours = st.number_input('Durations Non Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
+  duration_other_niv_hours = st.number_input('Durations Other Non Invasive Ventilation (hours)', min_value=0, max_value=1000, value=30, step=1)
 
   
